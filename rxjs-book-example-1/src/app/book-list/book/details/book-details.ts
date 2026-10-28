@@ -20,5 +20,5 @@ export class BookDetailsPage {
   readonly id = signal<string | null>(this.activatedRoute.snapshot.paramMap.get('id'));
 
   protected readonly isLoading = signal<boolean>(true);
-  protected readonly details$ = new Observable<BookDetails>(); //TODO details nog op te halen TIP: source is in de service
+  protected readonly details$ = new Observable<BookDetails>(); //TODO details nog op te halen
 }
