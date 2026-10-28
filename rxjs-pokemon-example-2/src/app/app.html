@@ -6,6 +6,10 @@
   <button (click)="onAddPokemon()">Add</button>
 </div>
 
+@for (pokemon of names(); track $index) {
+  <p>{{ pokemon }}</p>
+}
+
 @let pokemon = pokemon$ | async;
 
 @if (pokemon) {

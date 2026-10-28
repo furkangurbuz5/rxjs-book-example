@@ -2,33 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-
-interface Pokemon {
-  id: number;
-  name: string;
-  types: string[];
-  sprite: string;
-}
-
-interface Species {
-  id: number;
-  flavorText: string;
-}
-
-interface PokemonData {
-  pokemon: Pokemon;
-  species: Species;
-}
-
-export type { PokemonData };
+import { Pokemon, PokemonResponse, PokemonData, Species } from '../interface/pokemon.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PokemonService {
   private http = inject(HttpClient);
 
   fetchPokemonById(id: number): Observable<Pokemon> {
-    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${id}`).pipe(
-      map((res: any) => ({
+    return this.http.get<PokemonResponse>(`https://pokeapi.co/api/v2/pokemon/${id}`).pipe(
+      map((res: PokemonResponse) => ({
         id: res.id,
         name: res.name,
         types: res.types.map((t: any) => t.type.name),
