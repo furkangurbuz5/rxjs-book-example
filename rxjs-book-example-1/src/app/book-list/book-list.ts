@@ -38,10 +38,8 @@ export class BookList implements OnInit {
   protected readonly isRecent = signal<boolean>(true);
   protected readonly recentBooks = signal<Book[]>([]);
 
-
-  
-  protected readonly books$ = null // boeken nog op te halen
-  protected readonly recentBooks$ = null // boeken nog op te halen
+  protected readonly books$ = null //TODO boeken nog op te halen TIP: source is de search input control
+  protected readonly recentBooks$ = null //TODO boeken nog op te halen TIP: source is in de service
 
   protected onShowRecent(): void {
     this.isRecent.set(true);
