@@ -71,25 +71,10 @@ export class PokemonService {
   }
 
   fetchPokemonWithSpeciesById(ids: number[]): Observable<PokemonData[]> {
-    return forkJoin(
-      ids.map((id) =>
-        forkJoin({
-          pokemon: this.fetchPokemonById(id),
-          species: this.fetchSpeciesById(id),
-        }),
-      ),
-    );
+    return new Observable<PokemonData[]>(); //TODO
   }
 
   fetchPokemonWithSpeciesByName(names: string[]): Observable<PokemonData[]> {
-    return forkJoin(
-      names.map((name) =>
-        forkJoin({
-          pokemon: this.fetchPokemonByName(name),
-          species: this.fetchSpeciesByName(name),
-        }),
-      ),
-    );
+    return new Observable<PokemonData[]>(); //TODO
   }
-
 }

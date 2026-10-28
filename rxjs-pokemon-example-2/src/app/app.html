@@ -1,42 +1,32 @@
 <h1>Pokemon Demo</h1>
 
-<label>Names:</label>
-<input [(ngModel)]="name" />
-<button (click)="onAddPokemon()">Add</button>
+<div class="input-section">
+  <label>Names:</label>
+  <input [(ngModel)]="name" placeholder="Enter Pokemon name" />
+  <button (click)="onAddPokemon()">Add</button>
+</div>
 
+@let pokemon = pokemon$ | async;
 
-@if (isLoading()) {
-  <p>Loading...</p>
-} @else if (error()) {
-  <p class="error">{{ error() }}</p>
-} @else {
-  <!-- <section id="pokemonbyid">
-    <h2>Pokemon by id</h2>
-    <div class="pokemon-grid">
-      @for (data of pokemonDataById(); track data.pokemon.id) {
-        <div class="pokemon-card">
-          <h2>{{ data.pokemon.name | titlecase }}</h2>
-          <p><strong>ID:</strong> {{ data.pokemon.id }}</p>
-          <p><strong>Types:</strong> {{ data.pokemon.types.join(', ') }}</p>
-          <img [src]="data.pokemon.sprite" [alt]="data.pokemon.name" width="120" height="120" />
-          <p class="flavor-text">{{ data.species.flavorText }}</p>
+@if (pokemon) {
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else {
+    <div class="sections-container">
+      <section id="pokemonbyname">
+        <h2>Pokemon by Name</h2>
+        <div class="pokemon-grid">
+          @for (data of pokemon; track data.pokemon.id) {
+            <div class="pokemon-card">
+              <h2>{{ data.pokemon.name | titlecase }}</h2>
+              <p><strong>ID:</strong> {{ data.pokemon.id }}</p>
+              <p><strong>Types:</strong> {{ data.pokemon.types.join(', ') }}</p>
+              <img [src]="data.pokemon.sprite" [alt]="data.pokemon.name" width="120" height="120" />
+              <p class="flavor-text">{{ data.species.flavorText }}</p>
+            </div>
+          }
         </div>
-      }
+      </section>
     </div>
-  </section> -->
-
-  <section id="pokemonbyname">
-    <h2>Pokemon by name</h2>
-    <div class="pokemon-grid">
-      @for (data of names$ | async; track data.pokemon.id) {
-        <div class="pokemon-card">
-          <h2>{{ data.pokemon.name | titlecase }}</h2>
-          <p><strong>ID:</strong> {{ data.pokemon.id }}</p>
-          <p><strong>Types:</strong> {{ data.pokemon.types.join(', ') }}</p>
-          <img [src]="data.pokemon.sprite" [alt]="data.pokemon.name" width="120" height="120" />
-          <p class="flavor-text">{{ data.species.flavorText }}</p>
-        </div>
-      }
-    </div>
-  </section>
+  }
 }
