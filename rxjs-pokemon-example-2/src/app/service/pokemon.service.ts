@@ -26,43 +26,70 @@ export type { PokemonData };
 export class PokemonService {
   private http = inject(HttpClient);
 
-  fetchPokemon(id: number): Observable<Pokemon> {
+  fetchPokemonById(id: number): Observable<Pokemon> {
     return this.http.get(`https://pokeapi.co/api/v2/pokemon/${id}`).pipe(
       map((res: any) => ({
         id: res.id,
         name: res.name,
         types: res.types.map((t: any) => t.type.name),
-        sprite: res.sprites.other['official-artwork'].front_default
+        sprite: res.sprites.other['official-artwork'].front_default,
       })),
-      catchError(err => {
-        console.error(`Error fetching Pokemon ${id}:`, err.message);
-        return of(null as any);
-      })
     );
   }
 
-  fetchSpecies(id: number): Observable<Species> {
+  fetchPokemonByName(name: string): Observable<Pokemon> {
+    return this.http.get(`https://pokeapi.co/api/v2/pokemon/${name}`).pipe(
+      map((res: any) => ({
+        id: res.id,
+        name: res.name,
+        types: res.types.map((t: any) => t.type.name),
+        sprite: res.sprites.other['official-artwork'].front_default,
+      })),
+    );
+  }
+
+  fetchSpeciesById(id: number): Observable<Species> {
     return this.http.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`).pipe(
       map((res: any) => ({
         id: res.id,
         flavorText: res.flavor_text_entries
           .find((e: any) => e.language.name === 'en')
-          ?.flavor_text.replace(/\n|\f/g, ' ')
+          ?.flavor_text.replace(/\n|\f/g, ' '),
       })),
-      catchError(err => {
-        console.error(`Error fetching species for ${id}:`, err.message);
-        return of(null as any);
-      })
     );
   }
 
-  // Uses forkJoin to fetch Pokemon + species in parallel
-  fetchPokemonWithSpecies(ids: number[]): Observable<PokemonData[]> {
-    return forkJoin(
-      ids.map(id => forkJoin({
-        pokemon: this.fetchPokemon(id),
-        species: this.fetchSpecies(id)
-      }))
+  fetchSpeciesByName(name: string): Observable<Species> {
+    return this.http.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`).pipe(
+      map((res: any) => ({
+        id: res.id,
+        flavorText: res.flavor_text_entries
+          .find((e: any) => e.language.name === 'en')
+          ?.flavor_text.replace(/\n|\f/g, ' '),
+      })),
     );
   }
+
+  fetchPokemonWithSpeciesById(ids: number[]): Observable<PokemonData[]> {
+    return forkJoin(
+      ids.map((id) =>
+        forkJoin({
+          pokemon: this.fetchPokemonById(id),
+          species: this.fetchSpeciesById(id),
+        }),
+      ),
+    );
+  }
+
+  fetchPokemonWithSpeciesByName(names: string[]): Observable<PokemonData[]> {
+    return forkJoin(
+      names.map((name) =>
+        forkJoin({
+          pokemon: this.fetchPokemonByName(name),
+          species: this.fetchSpeciesByName(name),
+        }),
+      ),
+    );
+  }
+
 }

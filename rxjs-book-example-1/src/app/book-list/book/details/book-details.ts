@@ -3,6 +3,8 @@ import { BookService } from '../../../service/book.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Spinner } from '../../../util/spinner/spinner';
+import { BookDetails } from '../../../interface/book.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'fwdl-book-details',
@@ -18,5 +20,5 @@ export class BookDetailsPage {
   readonly id = signal<string | null>(this.activatedRoute.snapshot.paramMap.get('id'));
 
   protected readonly isLoading = signal<boolean>(true);
-  protected readonly details$ = null //TODO details nog op te halen TIP: source is in de service
+  protected readonly details$ = new Observable<BookDetails>(); //TODO details nog op te halen TIP: source is in de service
 }

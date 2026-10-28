@@ -5,6 +5,7 @@ import { BookService } from '../service/book.service';
 import { Book } from '../interface/book.interface';
 import { BookPage as FwdlBook } from './book/book';
 import { Spinner } from '../util/spinner/spinner';
+import { Observable } from 'rxjs';
 
 @Component({
   imports: [AsyncPipe, ReactiveFormsModule, FwdlBook, Spinner],
@@ -27,8 +28,8 @@ export class BookList implements OnInit {
   protected readonly isRecent = signal<boolean>(true);
   protected readonly recentBooks = signal<Book[]>([]);
 
-  protected readonly books$ = null; //TODO boeken nog op te halen TIP: source is de search input control
-  protected readonly recentBooks$ = null; //TODO boeken nog op te halen TIP: source is in de service
+  protected readonly books$ = new Observable<Book[]>(); //TODO boeken nog op te halen TIP: source is de search input control
+  protected readonly recentBooks$ = new Observable<Book[]>();; //TODO boeken nog op te halen TIP: source is in de service
 
   protected onShowRecent(): void {
     this.isRecent.set(true);
