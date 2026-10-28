@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { BookService } from '../../../service/book.service';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { delay, filter, finalize, switchMap } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Spinner } from '../../../util/spinner/spinner';

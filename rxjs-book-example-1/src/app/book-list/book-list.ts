@@ -1,17 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  debounceTime,
-  switchMap,
-  tap,
-  finalize,
-  catchError,
-  of,
-  filter,
-  distinctUntilChanged,
-  map,
-} from 'rxjs';
 import { BookService } from '../service/book.service';
 import { Book } from '../interface/book.interface';
 import { BookPage as FwdlBook } from './book/book';
@@ -38,15 +27,13 @@ export class BookList implements OnInit {
   protected readonly isRecent = signal<boolean>(true);
   protected readonly recentBooks = signal<Book[]>([]);
 
-  protected readonly books$ = null //TODO boeken nog op te halen TIP: source is de search input control
-  protected readonly recentBooks$ = null //TODO boeken nog op te halen TIP: source is in de service
+  protected readonly books$ = null; //TODO boeken nog op te halen TIP: source is de search input control
+  protected readonly recentBooks$ = null; //TODO boeken nog op te halen TIP: source is in de service
 
   protected onShowRecent(): void {
     this.isRecent.set(true);
     this.search.setValue('');
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
