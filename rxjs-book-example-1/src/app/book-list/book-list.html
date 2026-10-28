@@ -1,0 +1,87 @@
+<section>
+  <h2 for="search">Search books</h2>
+  <input id="search" [formControl]="search" />
+</section>
+
+<section>
+  <h3>Select a programming language / framework</h3>
+  <div class="options-grid">
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'python'"
+      (click)="search.setValue('python')"
+    >
+      Python
+    </button>
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'java'"
+      (click)="search.setValue('java')"
+    >
+      Java
+    </button>
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'javascript'"
+      (click)="search.setValue('javascript')"
+    >
+      JavaScript
+    </button>
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'php'"
+      (click)="search.setValue('php')"
+    >
+      PHP
+    </button>
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'angular'"
+      (click)="search.setValue('angular')"
+    >
+      Angular
+    </button>
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'vue'"
+      (click)="search.setValue('vue')"
+    >
+      Vue
+    </button>
+    <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'react'"
+      (click)="search.setValue('react')"
+    >
+      React
+    </button>
+     <button
+      [class.selected]="this.search.getRawValue().toLowerCase() === 'spring'"
+      (click)="search.setValue('spring')"
+    >
+      Spring
+    </button>
+  </div>
+
+  <button [disabled]="isRecent()" (click)="onShowRecent()">Show recent books</button>
+</section>
+
+<section>
+  @let books = books$ | async;
+  <!-- @let recentBooks = recentBooks$ | async; -->
+
+  @if (isLoading()) {
+    <fwdl-spinner [spin]="isLoading()"></fwdl-spinner>
+  } @else {
+    @if (isRecent()) {
+      <h2>Showing most recent books</h2>
+      <div class="books-grid">
+        @for (book of recentBooks(); track book.id) {
+          <fwdl-book [book]="book"></fwdl-book>
+        }
+      </div>
+    } @else if (searched()) {
+      <h2>Showing results for {{ searched() }}</h2>
+      <div class="books-grid">
+        @for (book of books; track book.id) {
+          <fwdl-book [book]="book"></fwdl-book>
+        }
+      </div>
+    } @else {
+      <h2>Try searching a software topic</h2>
+    }
+  }
+</section>
