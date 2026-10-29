@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Service } from '@angular/core';
-import { Observable, map, of, share } from 'rxjs';
+import { inject, Service } from '@angular/core';
+import { Observable, map, share } from 'rxjs';
 import { Book, BookDetails, BookResponse } from '../interface/book.interface';
 
 @Service()
