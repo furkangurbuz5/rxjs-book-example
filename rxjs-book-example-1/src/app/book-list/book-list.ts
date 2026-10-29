@@ -28,8 +28,8 @@ export class BookList implements OnInit {
   protected readonly isRecent = signal<boolean>(true);
   protected readonly recentBooks = signal<Book[]>([]);
 
-  protected readonly books$ = new Observable<Book[]>(); //TODO boeken nog op te halen 
-  protected readonly recentBooks$ = new Observable<Book[]>();; //TODO boeken nog op te halen 
+  protected readonly books$ = new Observable<Book[]>(); //TODO boeken nog op te halen
+  protected readonly recentBooks$ = new Observable<Book[]>(); //TODO boeken nog op te halen
 
   protected onShowRecent(): void {
     this.isRecent.set(true);
