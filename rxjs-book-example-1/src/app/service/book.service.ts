@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { Observable, map, share } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Book, BookDetails, BookResponse } from '../interface/book.interface';
 
 @Service()
@@ -19,9 +19,8 @@ export class BookService {
   }
 
   public getRecentBooks(): Observable<Book[]> {
-    return this.http.get<BookResponse>(`${this.dbooksUrl}/recent`).pipe(
-      map((response) => response.books),
-      share(),
-    );
+    return this.http
+      .get<BookResponse>(`${this.dbooksUrl}/recent`)
+      .pipe(map((response) => response.books));
   }
 }
